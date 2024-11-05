@@ -3046,7 +3046,7 @@ Trades with long duration and 10s or even 100ds of position adjustments are ther
         <span class="c1"># Hope you have a deep wallet!</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># This returns first order stake size</span>
-            <span class="n">stake_amount</span> <span class="o">=</span> <span class="n">filled_entries</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">stake_amount</span>
+            <span class="n">stake_amount</span> <span class="o">=</span> <span class="n">filled_entries</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">stake_amount_filled</span>
             <span class="c1"># This then calculates current safety order size</span>
             <span class="n">stake_amount</span> <span class="o">=</span> <span class="n">stake_amount</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">count_of_entries</span> <span class="o">*</span> <span class="mf">0.25</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">stake_amount</span><span class="p">,</span> <span class="s2">&quot;1/3rd_increase&quot;</span>
