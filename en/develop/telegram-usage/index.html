@@ -2195,8 +2195,11 @@ Each setting has the following possible values:</p>
 <span class="w">            </span><span class="nt">&quot;stop_loss&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;on&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;stoploss_on_exchange&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;on&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;custom_exit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;silent&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;partial_exit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;on&quot;</span>
+<span class="w">            </span><span class="nt">&quot;partial_exit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;on&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="c1">// &quot;custom_exit_message&quot;: &quot;silent&quot;,  // Disable individual custom exit reasons</span>
+<span class="w">            </span><span class="nt">&quot;*&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;off&quot;</span><span class="w">  </span><span class="c1">// Disable all other exit reasons</span>
 <span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="c1">// &quot;exit&quot;: &quot;off&quot;,  // Simplistic configuration to disable all exit messages</span>
 <span class="w">        </span><span class="nt">&quot;exit_cancel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;on&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;exit_fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;off&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;protection_trigger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;off&quot;</span><span class="p">,</span>
@@ -2208,15 +2211,18 @@ Each setting has the following possible values:</p>
 <span class="w">    </span><span class="nt">&quot;balance_dust_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span>
 <span class="p">},</span>
 </code></pre></div>
-<p><code>entry</code> notifications are sent when the order is placed, while <code>entry_fill</code> notifications are sent when the order is filled on the exchange.
-<code>exit</code> notifications are sent when the order is placed, while <code>exit_fill</code> notifications are sent when the order is filled on the exchange.
-<code>*_fill</code> notifications are off by default and must be explicitly enabled.
-<code>protection_trigger</code> notifications are sent when a protection triggers and <code>protection_trigger_global</code> notifications trigger when global protections are triggered.
-<code>strategy_msg</code> - Receive notifications from the strategy, sent via <code>self.dp.send_msg()</code> from the strategy <a href="../strategy-customization/#send-notification">more details</a>.
-<code>show_candle</code> - show candle values as part of entry/exit messages. Only possible values are <code>"ohlc"</code> or <code>"off"</code>.</p>
-<p><code>balance_dust_level</code> will define what the <code>/balance</code> command takes as "dust" - Currencies with a balance below this will be shown.
-<code>allow_custom_messages</code> completely disable strategy messages.
-<code>reload</code> allows you to disable reload-buttons on selected messages.</p>
+<ul>
+<li><code>entry</code> notifications are sent when the order is placed, while <code>entry_fill</code> notifications are sent when the order is filled on the exchange.  </li>
+<li><code>exit</code> notifications are sent when the order is placed, while <code>exit_fill</code> notifications are sent when the order is filled on the exchange.<br />
+    Exit messages (<code>exit</code> and <code>exit_fill</code>) can be further controlled at individual exit reasons level, with the specific exit reason as the key. the default for all exit reasons is <code>on</code> - but can be configured via special <code>*</code> key - which will act as a wildcard for all exit reasons that are not explicitly defined.</li>
+<li><code>*_fill</code> notifications are off by default and must be explicitly enabled.  </li>
+<li><code>protection_trigger</code> notifications are sent when a protection triggers and <code>protection_trigger_global</code> notifications trigger when global protections are triggered.  </li>
+<li><code>strategy_msg</code> - Receive notifications from the strategy, sent via <code>self.dp.send_msg()</code> from the strategy <a href="../strategy-customization/#send-notification">more details</a>.  </li>
+<li><code>show_candle</code> - show candle values as part of entry/exit messages. Only possible values are <code>"ohlc"</code> or <code>"off"</code>.  </li>
+<li><code>balance_dust_level</code> will define what the <code>/balance</code> command takes as "dust" - Currencies with a balance below this will be shown.  </li>
+<li><code>allow_custom_messages</code> completely disable strategy messages.  </li>
+<li><code>reload</code> allows you to disable reload-buttons on selected messages.  </li>
+</ul>
 <h2 id="create-a-custom-keyboard-command-shortcut-buttons">Create a custom keyboard (command shortcut buttons)<a class="headerlink" href="#create-a-custom-keyboard-command-shortcut-buttons" title="Permanent link">&para;</a></h2>
 <p>Telegram allows us to create a custom keyboard with buttons for commands.
 The default custom keyboard looks like this.</p>
@@ -2457,16 +2463,16 @@ Once all positions are sold, run <code>/stop</code> to completely stop the bot.<
 <p>For each open trade, the bot will send you the following message.
 Enter Tag is configurable via Strategy.</p>
 <blockquote>
-<p><strong>Trade ID:</strong> <code>123</code> <code>(since 1 days ago)</code>
-<strong>Current Pair:</strong> CVC/BTC
-<strong>Direction:</strong> Long
-<strong>Leverage:</strong> 1.0
-<strong>Amount:</strong> <code>26.64180098</code>
-<strong>Enter Tag:</strong> Awesome Long Signal
-<strong>Open Rate:</strong> <code>0.00007489</code>
-<strong>Current Rate:</strong> <code>0.00007489</code>
-<strong>Unrealized Profit:</strong> <code>12.95%</code>
-<strong>Stoploss:</strong> <code>0.00007389 (-0.02%)</code></p>
+<p><strong>Trade ID:</strong> <code>123</code> <code>(since 1 days ago)</code><br />
+<strong>Current Pair:</strong> CVC/BTC<br />
+<strong>Direction:</strong> Long<br />
+<strong>Leverage:</strong> 1.0<br />
+<strong>Amount:</strong> <code>26.64180098</code><br />
+<strong>Enter Tag:</strong> Awesome Long Signal<br />
+<strong>Open Rate:</strong> <code>0.00007489</code><br />
+<strong>Current Rate:</strong> <code>0.00007489</code><br />
+<strong>Unrealized Profit:</strong> <code>12.95%</code><br />
+<strong>Stoploss:</strong> <code>0.00007389 (-0.02%)</code>  </p>
 </blockquote>
 <h3 id="status-table">/status table<a class="headerlink" href="#status-table" title="Permanent link">&para;</a></h3>
 <p>Return the status of all open trades in a table format.</p>
@@ -2484,33 +2490,33 @@ Enter Tag is configurable via Strategy.</p>
 <h3 id="profit">/profit<a class="headerlink" href="#profit" title="Permanent link">&para;</a></h3>
 <p>Return a summary of your profit/loss and performance.</p>
 <blockquote>
-<p><strong>ROI:</strong> Close trades
-  ∙ <code>0.00485701 BTC (2.2%) (15.2 Σ%)</code>
-  ∙ <code>62.968 USD</code>
-<strong>ROI:</strong> All trades
-  ∙ <code>0.00255280 BTC (1.5%) (6.43 Σ%)</code>
-  ∙ <code>33.095 EUR</code></p>
-<p><strong>Total Trade Count:</strong> <code>138</code>
-<strong>Bot started:</strong> <code>2022-07-11 18:40:44</code>
-<strong>First Trade opened:</strong> <code>3 days ago</code>
-<strong>Latest Trade opened:</strong> <code>2 minutes ago</code>
-<strong>Avg. Duration:</strong> <code>2:33:45</code>
-<strong>Best Performing:</strong> <code>PAY/BTC: 50.23%</code>
-<strong>Trading volume:</strong> <code>0.5 BTC</code>
-<strong>Profit factor:</strong> <code>1.04</code>
-<strong>Win / Loss:</strong> <code>102 / 36</code>
-<strong>Winrate:</strong> <code>73.91%</code>
-<strong>Expectancy (Ratio):</strong> <code>4.87 (1.66)</code>
-<strong>Max Drawdown:</strong> <code>9.23% (0.01255 BTC)</code></p>
+<p><strong>ROI:</strong> Close trades<br />
+  ∙ <code>0.00485701 BTC (2.2%) (15.2 Σ%)</code><br />
+  ∙ <code>62.968 USD</code><br />
+<strong>ROI:</strong> All trades<br />
+  ∙ <code>0.00255280 BTC (1.5%) (6.43 Σ%)</code><br />
+  ∙ <code>33.095 EUR</code>  </p>
+<p><strong>Total Trade Count:</strong> <code>138</code><br />
+<strong>Bot started:</strong> <code>2022-07-11 18:40:44</code><br />
+<strong>First Trade opened:</strong> <code>3 days ago</code><br />
+<strong>Latest Trade opened:</strong> <code>2 minutes ago</code><br />
+<strong>Avg. Duration:</strong> <code>2:33:45</code><br />
+<strong>Best Performing:</strong> <code>PAY/BTC: 50.23%</code><br />
+<strong>Trading volume:</strong> <code>0.5 BTC</code><br />
+<strong>Profit factor:</strong> <code>1.04</code><br />
+<strong>Win / Loss:</strong> <code>102 / 36</code><br />
+<strong>Winrate:</strong> <code>73.91%</code><br />
+<strong>Expectancy (Ratio):</strong> <code>4.87 (1.66)</code><br />
+<strong>Max Drawdown:</strong> <code>9.23% (0.01255 BTC)</code>  </p>
 </blockquote>
-<p>The relative profit of <code>1.2%</code> is the average profit per trade.
-The relative profit of <code>15.2 Σ%</code> is be based on the starting capital - so in this case, the starting capital was <code>0.00485701 * 1.152 = 0.00738 BTC</code>.
-Starting capital is either taken from the <code>available_capital</code> setting, or calculated by using current wallet size - profits.
-Profit Factor is calculated as gross profits / gross losses - and should serve as an overall metric for the strategy.
-Expectancy corresponds to the average return per currency unit at risk, i.e. the winrate and the risk-reward ratio (the average gain of winning trades compared to the average loss of losing trades).
-Expectancy Ratio is expected profit or loss of a subsequent trade based on the performance of all past trades.
-Max drawdown corresponds to the backtesting metric <code>Absolute Drawdown (Account)</code> - calculated as <code>(Absolute Drawdown) / (DrawdownHigh + startingBalance)</code>.
-Bot started date will refer to the date the bot was first started. For older bots, this will default to the first trade's open date.</p>
+<p>The relative profit of <code>1.2%</code> is the average profit per trade.<br />
+The relative profit of <code>15.2 Σ%</code> is be based on the starting capital - so in this case, the starting capital was <code>0.00485701 * 1.152 = 0.00738 BTC</code>.<br />
+<strong>Starting capital(</strong>) is either taken from the <code>available_capital</code> setting, or calculated by using current wallet size - profits.<br />
+<strong>Profit Factor</strong> is calculated as gross profits / gross losses - and should serve as an overall metric for the strategy.<br />
+<strong>Expectancy</strong> corresponds to the average return per currency unit at risk, i.e. the winrate and the risk-reward ratio (the average gain of winning trades compared to the average loss of losing trades).<br />
+<strong>Expectancy Ratio</strong> is expected profit or loss of a subsequent trade based on the performance of all past trades.<br />
+<strong>Max drawdown</strong> corresponds to the backtesting metric <code>Absolute Drawdown (Account)</code> - calculated as <code>(Absolute Drawdown) / (DrawdownHigh + startingBalance)</code>.<br />
+<strong>Bot started date</strong> will refer to the date the bot was first started. For older bots, this will default to the first trade's open date.  </p>
 <h3 id="forceexit">/forceexit <trade_id><a class="headerlink" href="#forceexit" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p><strong>BINANCE:</strong> Exiting BTC/LTC with limit <code>0.01650000 (profit: ~-4.07%, -0.00008168)</code></p>
@@ -2533,49 +2539,49 @@ Trades created through <code>/forcelong</code> will have the buy-tag of <code>fo
 <h3 id="performance">/performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h3>
 <p>Return the performance of each crypto-currency the bot has sold.</p>
 <blockquote>
-<p>Performance:
-1. <code>RCN/BTC 0.003 BTC (57.77%) (1)</code>
-2. <code>PAY/BTC 0.0012 BTC (56.91%) (1)</code>
-3. <code>VIB/BTC 0.0011 BTC (47.07%) (1)</code>
-4. <code>SALT/BTC 0.0010 BTC (30.24%) (1)</code>
-5. <code>STORJ/BTC 0.0009 BTC (27.24%) (1)</code>
-...</p>
+<p>Performance:<br />
+1. <code>RCN/BTC 0.003 BTC (57.77%) (1)</code><br />
+2. <code>PAY/BTC 0.0012 BTC (56.91%) (1)</code><br />
+3. <code>VIB/BTC 0.0011 BTC (47.07%) (1)</code><br />
+4. <code>SALT/BTC 0.0010 BTC (30.24%) (1)</code><br />
+5. <code>STORJ/BTC 0.0009 BTC (27.24%) (1)</code><br />
+...  </p>
 </blockquote>
 <h3 id="balance">/balance<a class="headerlink" href="#balance" title="Permanent link">&para;</a></h3>
 <p>Return the balance of all crypto-currency your have on the exchange.</p>
 <blockquote>
-<p><strong>Currency:</strong> BTC
-<strong>Available:</strong> 3.05890234
-<strong>Balance:</strong> 3.05890234
-<strong>Pending:</strong> 0.0</p>
-<p><strong>Currency:</strong> CVC
-<strong>Available:</strong> 86.64180098
-<strong>Balance:</strong> 86.64180098
-<strong>Pending:</strong> 0.0</p>
+<p><strong>Currency:</strong> BTC<br />
+<strong>Available:</strong> 3.05890234<br />
+<strong>Balance:</strong> 3.05890234<br />
+<strong>Pending:</strong> 0.0  </p>
+<p><strong>Currency:</strong> CVC<br />
+<strong>Available:</strong> 86.64180098<br />
+<strong>Balance:</strong> 86.64180098<br />
+<strong>Pending:</strong> 0.0  </p>
 </blockquote>
 <h3 id="daily">/daily <n><a class="headerlink" href="#daily" title="Permanent link">&para;</a></h3>
 <p>Per default <code>/daily</code> will return the 7 last days. The example below if for <code>/daily 3</code>:</p>
 <blockquote>
-<p><strong>Daily Profit over the last 3 days:</strong>
+<p><strong>Daily Profit over the last 3 days:</strong></p>
+</blockquote>
 <div class="highlight"><pre><span></span><code>Day (count)     USDT          USD         Profit %
 --------------  ------------  ----------  ----------
 2022-06-11 (1)  -0.746 USDT   -0.75 USD   -0.08%
 2022-06-10 (0)  0 USDT        0.00 USD    0.00%
 2022-06-09 (5)  20 USDT       20.10 USD   5.00%
-</code></pre></div></p>
-</blockquote>
+</code></pre></div>
 <h3 id="weekly">/weekly <n><a class="headerlink" href="#weekly" title="Permanent link">&para;</a></h3>
 <p>Per default <code>/weekly</code> will return the 8 last weeks, including the current week. Each week starts
 from Monday. The example below if for <code>/weekly 3</code>:</p>
 <blockquote>
-<p><strong>Weekly Profit over the last 3 weeks (starting from Monday):</strong>
+<p><strong>Weekly Profit over the last 3 weeks (starting from Monday):</strong></p>
+</blockquote>
 <div class="highlight"><pre><span></span><code>Monday (count)  Profit BTC      Profit USD   Profit %
 -------------  --------------  ------------    ----------
 2018-01-03 (5)  0.00224175 BTC  29,142 USD   4.98%
 2017-12-27 (1)  0.00033131 BTC   4,307 USD   0.00%
 2017-12-20 (4)  0.00269130 BTC  34.986 USD   5.12%
-</code></pre></div></p>
-</blockquote>
+</code></pre></div>
 <h3 id="monthly">/monthly <n><a class="headerlink" href="#monthly" title="Permanent link">&para;</a></h3>
 <p>Per default <code>/monthly</code> will return the 6 last months, including the current month. The example below
 if for <code>/monthly 3</code>:</p>
@@ -2591,17 +2597,17 @@ if for <code>/monthly 3</code>:</p>
 <h3 id="whitelist">/whitelist<a class="headerlink" href="#whitelist" title="Permanent link">&para;</a></h3>
 <p>Shows the current whitelist</p>
 <blockquote>
-<p>Using whitelist <code>StaticPairList</code> with 22 pairs
+<p>Using whitelist <code>StaticPairList</code> with 22 pairs<br />
 <code>IOTA/BTC, NEO/BTC, TRX/BTC, VET/BTC, ADA/BTC, ETC/BTC, NCASH/BTC, DASH/BTC, XRP/BTC, XVG/BTC, EOS/BTC, LTC/BTC, OMG/BTC, BTG/BTC, LSK/BTC, ZEC/BTC, HOT/BTC, IOTX/BTC, XMR/BTC, AST/BTC, XLM/BTC, NANO/BTC</code></p>
 </blockquote>
 <h3 id="blacklist-pair">/blacklist [pair]<a class="headerlink" href="#blacklist-pair" title="Permanent link">&para;</a></h3>
 <p>Shows the current blacklist.
 If Pair is set, then this pair will be added to the pairlist.
-Also supports multiple pairs, separated by a space.
+Also supports multiple pairs, separated by a space.<br />
 Use <code>/reload_config</code> to reset the blacklist.</p>
 <blockquote>
-<p>Using blacklist <code>StaticPairList</code> with 2 pairs
-<code>DODGE/BTC</code>, <code>HOT/BTC</code>.</p>
+<p>Using blacklist <code>StaticPairList</code> with 2 pairs<br />
+<code>DODGE/BTC</code>, <code>HOT/BTC</code>.  </p>
 </blockquote>
 <h3 id="edge">/edge<a class="headerlink" href="#edge" title="Permanent link">&para;</a></h3>
 <p>Shows pairs validated by Edge along with their corresponding win-rate, expectancy and stoploss values.</p>
