@@ -1688,8 +1688,8 @@ For the sample below, you then need to add the command line parameter <code>--hy
         <span class="n">min_date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
         <span class="n">max_date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
         <span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">,</span>
-        <span class="n">processed</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataFrame</span><span class="p">],</span>
-        <span class="n">backtest_stats</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">processed</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataFrame</span><span class="p">],</span>
+        <span class="n">backtest_stats</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1751,7 +1751,7 @@ For the sample below, you then need to add the command line parameter <code>--hy
                 <span class="n">SKDecimal</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;roi_p3&#39;</span><span class="p">),</span>
             <span class="p">]</span>
 
-        <span class="k">def</span> <span class="nf">generate_roi_table</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="k">def</span> <span class="nf">generate_roi_table</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 
             <span class="n">roi_table</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">roi_table</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;roi_p1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;roi_p2&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;roi_p3&#39;</span><span class="p">]</span>
