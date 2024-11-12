@@ -1162,6 +1162,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#output-debug-messages-from-your-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output debug messages from your strategy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#validate-backtesting-results" class="md-nav__link">
     <span class="md-ellipsis">
       Validate backtesting results
@@ -2338,6 +2347,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#output-debug-messages-from-your-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output debug messages from your strategy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#validate-backtesting-results" class="md-nav__link">
     <span class="md-ellipsis">
       Validate backtesting results
@@ -3204,6 +3222,26 @@ Freqtrade tries to counter the "local minima" problem by using new, randomized p
 Your epochs should therefore be aligned to the possible values - or you should be ready to interrupt a run if you norice a lot of <code>The objective has been evaluated at this point before.</code> warnings.</p>
 <h2 id="show-details-of-hyperopt-results">Show details of Hyperopt results<a class="headerlink" href="#show-details-of-hyperopt-results" title="Permanent link">&para;</a></h2>
 <p>After you run Hyperopt for the desired amount of epochs, you can later list all results for analysis, select only best or profitable once, and show the details for any of the epochs previously evaluated. This can be done with the <code>hyperopt-list</code> and <code>hyperopt-show</code> sub-commands. The usage of these sub-commands is described in the <a href="../utils/#list-hyperopt-results">Utils</a> chapter.</p>
+<h2 id="output-debug-messages-from-your-strategy">Output debug messages from your strategy<a class="headerlink" href="#output-debug-messages-from-your-strategy" title="Permanent link">&para;</a></h2>
+<p>If you want to output debug messages from your strategy, you can use the <code>logging</code> module. By default, Freqtrade will output all messages with a level of <code>INFO</code> or higher. </p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">logging</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MyAwesomeStrategy</span><span class="p">(</span><span class="n">IStrategy</span><span class="p">):</span>
+    <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">populate_entry_trend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;This is a debug message&quot;</span><span class="p">)</span>
+        <span class="o">...</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">using print</p>
+<p>Messages printed via <code>print()</code> will not be shown in the hyperopt output unless parallelism is disabled (<code>-j 1</code>). 
+It is recommended to use the <code>logging</code> module instead.</p>
+</div>
 <h2 id="validate-backtesting-results">Validate backtesting results<a class="headerlink" href="#validate-backtesting-results" title="Permanent link">&para;</a></h2>
 <p>Once the optimized strategy has been implemented into your strategy, you should backtest this strategy to make sure everything is working as expected.</p>
 <p>To achieve same the results (number of trades, their durations, profit, etc.) as during Hyperopt, please use the same configuration and parameters (timerange, timeframe, ...) used for hyperopt for Backtesting.</p>
