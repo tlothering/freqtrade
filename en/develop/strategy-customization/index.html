@@ -3081,11 +3081,14 @@ and do not have access to data from other informative pairs. However, all inform
 <p>When hyperopting, use of the hyperoptable parameter <code>.value</code> attribute is not supported. Please use the <code>.range</code> attribute. See <a href="../hyperopt/#optimizing-an-indicator-parameter">optimizing an indicator parameter</a> for more information.</p>
 <details class="info">
 <summary>Full documentation</summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">informative</span><span class="p">(</span><span class="n">timeframe</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">asset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="n">fmt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">KwArg</span><span class="p">(</span><span class="nb">str</span><span class="p">)],</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                <span class="o">*</span><span class="p">,</span>
-                <span class="n">candle_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CandleType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                <span class="n">ffill</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PopulateIndicators</span><span class="p">],</span> <span class="n">PopulateIndicators</span><span class="p">]:</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">informative</span><span class="p">(</span>
+    <span class="n">timeframe</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">asset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">candle_type</span><span class="p">:</span> <span class="n">CandleType</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">ffill</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PopulateIndicators</span><span class="p">],</span> <span class="n">PopulateIndicators</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A decorator for populate_indicators_Nn(self, dataframe, metadata), allowing these functions to</span>
 <span class="sd">    define informative indicators.</span>
