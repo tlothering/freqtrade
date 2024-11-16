@@ -1242,6 +1242,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#hyperliquid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hyperliquid
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#all-exchanges" class="md-nav__link">
     <span class="md-ellipsis">
       All exchanges
@@ -1978,6 +1987,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#hyperliquid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hyperliquid
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#all-exchanges" class="md-nav__link">
     <span class="md-ellipsis">
       All exchanges
@@ -2275,6 +2293,42 @@ It's therefore required to pass the UID as well.</p>
 <div class="admonition warning">
 <p class="admonition-title">Necessary Verification</p>
 <p>Bitmart requires Verification Lvl2 to successfully trade on the spot market through the API - even though trading via UI works just fine with just Lvl1 verification.</p>
+</div>
+<h2 id="hyperliquid">Hyperliquid<a class="headerlink" href="#hyperliquid" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Stoploss on Exchange</p>
+<p>Hyperliquid supports <code>stoploss_on_exchange</code> and uses <code>stop-loss-limit</code> orders. It provides great advantages, so we recommend to benefit from it.</p>
+</div>
+<p>Hyperliquid is a Decentralized Exchange (DEX). Decentralized exchanges work a bit different compared to normal exchanges. Instead of authenticating private API calls using an API key, private API calls need to be signed with the private key of your wallet.
+This needs to be configured like this:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;exchange&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hyperliquid&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;walletAddress&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your_eth_wallet_address&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;privateKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your_private_key&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>walletAddress must be in hex format: <code>0x&lt;40 hex characters&gt;</code>, and can be easily copied from your wallet.</li>
+<li>privateKey also must be in hex format: <code>0x&lt;64 hex characters&gt;</code>, and can either be exported from your wallet or regenerated using your mnemonic phrase.</li>
+</ul>
+<p>Hyperliquid handles deposits and withdrawals on the Arbitrum One chain, a Layer 2 scaling solution built on top of Ethereum. Hyperliquid uses USDC as quote / collateral. The process of depositing USDC on Hyperliquid requires a couple of steps, see <a href="https://hyperliquid.gitbook.io/hyperliquid-docs/onboarding/how-to-start-trading">how to start trading</a> for details on what steps are needed.</p>
+<div class="admonition note">
+<p class="admonition-title">Hyperliquid general usage Notes</p>
+<p>Hyperliquid does not support market orders, however ccxt will simulate market orders by placing limit orders with a maximum slippage of 5%.<br />
+Unfortunately, hyperliquid only offers 5000 historic candles, so backtesting will either need to build candles historically (by waiting and downloading the data incrementally over time) - or will be limited to the last 5000 candles.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Some general best practices (non exhaustive)</p>
+<ul>
+<li>Beware of supply chain attacks, like pip package poisoning etcetera. However you export or (re-)generate your private key, make sure your environment is safe.</li>
+<li>Interact as little with the private key as possible. Store it in a separate file from the config.json (secrets.json for example) that you never have to touch, and secure it.</li>
+<li>Always keep your mnemonic phrase and private key private.</li>
+<li>Don't use the same mnemonic as the one you had to backup when initializing a hardware wallet, using the same mnemonic basically deletes the security of your hardware wallet.</li>
+<li>Create a different software wallet, only transfer the funds you want to trade with to that wallet, and use that wallet / private key to trade on Hyperliquid.</li>
+<li>Remember that if someone hacks the host you use for trading, or any other host you stored your private key / mnemonic on, you will lose the funds protected by that private key. That means the funds on that wallet and the funds deposited on Hyperliquid.</li>
+<li>If you have funds you don't want to use for trading (after making a profit for example), transfer them back to your hardware wallet.</li>
+</ul>
 </div>
 <h2 id="all-exchanges">All exchanges<a class="headerlink" href="#all-exchanges" title="Permanent link">&para;</a></h2>
 <p>Should you experience constant errors with Nonce (like <code>InvalidNonce</code>), it is best to regenerate the API keys. Resetting Nonce is difficult and it's usually easier to regenerate the API keys.</p>
