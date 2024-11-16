@@ -2478,7 +2478,7 @@ This general class of error should however not be used directly. Instead, multip
 <p>You have a great idea for a new pair selection algorithm you would like to try out? Great.
 Hopefully you also want to contribute this back upstream.</p>
 <p>Whatever your motivations are - This should get you off the ground in trying to develop a new Pairlist Handler.</p>
-<p>First of all, have a look at the <a href="https://github.com/freqtrade/freqtrade/blob/develop/freqtrade/pairlist/VolumePairList.py">VolumePairList</a> Handler, and best copy this file with a name of your new Pairlist Handler.</p>
+<p>First of all, have a look at the <a href="https://github.com/freqtrade/freqtrade/blob/develop/freqtrade/plugins/pairlist/VolumePairList.py">VolumePairList</a> Handler, and best copy this file with a name of your new Pairlist Handler.</p>
 <p>This is a simple Handler, which however serves as a good example on how to start developing.</p>
 <p>Next, modify the class-name of the Handler (ideally align this with the module filename).</p>
 <p>The base-class provides an instance of the exchange (<code>self._exchange</code>) the pairlist manager (<code>self._pairlistmanager</code>), as well as the main configuration (<code>self._config</code>), the pairlist dedicated configuration (<code>self._pairlistconfig</code>) and the absolute position within the list of pairlists.</p>
