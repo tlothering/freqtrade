@@ -1956,9 +1956,8 @@ Without provided configuration, <code>--exchange</code> becomes mandatory.</p>
 <p>You can use a relative timerange (<code>--days 20</code>) or an absolute starting point (<code>--timerange 20200101-</code>). For incremental downloads, the relative approach should be used.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip: Updating existing data</p>
-<p>If you already have backtesting data available in your data-directory and would like to refresh this data up to today, freqtrade will automatically calculate the data missing for the existing pairs and the download will occur from the latest available point until "now", neither --days or --timerange parameters are required. Freqtrade will keep the available data and only download the missing data.
-If you are updating existing data after inserting new pairs that you have no data for, use <code>--new-pairs-days xx</code> parameter. Specified number of days will be downloaded for new pairs while old pairs will be updated with missing data only.
-If you use <code>--days xx</code> parameter alone - data for specified number of days will be downloaded for <em>all</em> pairs. Be careful, if specified number of days is smaller than gap between now and last downloaded candle - freqtrade will delete all existing data to avoid gaps in candle data.</p>
+<p>If you already have backtesting data available in your data-directory and would like to refresh this data up to today, freqtrade will automatically calculate the missing timerange for the existing pairs and the download will occur from the latest available point until "now", neither <code>--days</code> or <code>--timerange</code> parameters are required. Freqtrade will keep the available data and only download the missing data.<br />
+If you are updating existing data after inserting new pairs that you have no data for, use the <code>--new-pairs-days xx</code> parameter. Specified number of days will be downloaded for new pairs while old pairs will be updated with missing data only.  </p>
 </div>
 <h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>usage: freqtrade download-data [-h] [-v] [--logfile FILE] [-V] [-c PATH]
@@ -2054,10 +2053,11 @@ To also download data for inactive (delisted) pairs, add <code>--include-inactiv
 <h3 id="other-notes">Other Notes<a class="headerlink" href="#other-notes" title="Permanent link">&para;</a></h3>
 <ul>
 <li>To use a different directory than the exchange specific default, use <code>--datadir user_data/data/some_directory</code>.</li>
-<li>To change the exchange used to download the historical data from, please use a different configuration file (you'll probably need to adjust rate limits etc.)</li>
+<li>To change the exchange used to download the historical data from, either use <code>--exchange &lt;exchange&gt;</code> - or specify a different configuration file.</li>
 <li>To use <code>pairs.json</code> from some other directory, use <code>--pairs-file some_other_dir/pairs.json</code>.</li>
 <li>To download historical candle (OHLCV) data for only 10 days, use <code>--days 10</code> (defaults to 30 days).</li>
 <li>To download historical candle (OHLCV) data from a fixed starting point, use <code>--timerange 20200101-</code> - which will download all data from January 1<sup>st</sup>, 2020.</li>
+<li>Given starting points are ignored if data is already available, downloading only missing data up to today.</li>
 <li>Use <code>--timeframes</code> to specify what timeframe download the historical candle (OHLCV) data for. Default is <code>--timeframes 1m 5m</code> which will download 1-minute and 5-minute data.</li>
 <li>To use exchange, timeframe and list of pairs as defined in your configuration file, use the <code>-c/--config</code> option. With this, the script uses the whitelist defined in the config as the list of currency pairs to download data for and does not require the pairs.json file. You can combine <code>-c/--config</code> with most other options.</li>
 </ul>
