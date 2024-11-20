@@ -1560,6 +1560,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#im-getting-impossible-to-load-strategy-when-starting-the-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      I'm getting "Impossible to load Strategy" when starting the bot
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#im-getting-missing-data-fillup-messages-in-the-log" class="md-nav__link">
     <span class="md-ellipsis">
       I'm getting "Missing data fillup" messages in the log
@@ -1961,6 +1970,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#im-getting-impossible-to-load-strategy-when-starting-the-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      I'm getting "Impossible to load Strategy" when starting the bot
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#im-getting-missing-data-fillup-messages-in-the-log" class="md-nav__link">
     <span class="md-ellipsis">
       I'm getting "Missing data fillup" messages in the log
@@ -2195,6 +2213,17 @@ To force an immediate update, you can use <code>/reload_config</code> - which wi
 <p>You can use the <code>/stopentry</code> command in Telegram to prevent future trade entry, followed by <code>/forceexit all</code> (sell all open trades).</p>
 <h3 id="i-want-to-run-multiple-bots-on-the-same-machine">I want to run multiple bots on the same machine<a class="headerlink" href="#i-want-to-run-multiple-bots-on-the-same-machine" title="Permanent link">&para;</a></h3>
 <p>Please look at the <a href="../advanced-setup/#running-multiple-instances-of-freqtrade">advanced setup documentation Page</a>.</p>
+<h3 id="im-getting-impossible-to-load-strategy-when-starting-the-bot">I'm getting "Impossible to load Strategy" when starting the bot<a class="headerlink" href="#im-getting-impossible-to-load-strategy-when-starting-the-bot" title="Permanent link">&para;</a></h3>
+<p>This error message is shown when the bot cannot load the strategy.
+Usually, you can use <code>freqtrade list-strategies</code> to list all available strategies. 
+The output of this command will also include a status column, showing if the strategy can be loaded.</p>
+<p>Please check the following:</p>
+<ul>
+<li>Are you using the correct strategy name? The strategy name is case-sensitive and must correspond to the Strategy class name (not the filename!).</li>
+<li>Is the strategy in the <code>user_data/strategies</code> directory, and has the file-ending <code>.py</code>?</li>
+<li>Does the bot show other warnings before this error? Maybe you're missing some dependencies for the strategy - which would be highlighted in the log.</li>
+<li>In case of docker - is the strategy directory mounted correctly (check the volumes part of the docker-compose file)?</li>
+</ul>
 <h3 id="im-getting-missing-data-fillup-messages-in-the-log">I'm getting "Missing data fillup" messages in the log<a class="headerlink" href="#im-getting-missing-data-fillup-messages-in-the-log" title="Permanent link">&para;</a></h3>
 <p>This message is just a warning that the latest candles had missing candles in them.
 Depending on the exchange, this can indicate that the pair didn't have a trade for the timeframe you are using - and the exchange does only return candles with volume.
@@ -2226,9 +2255,9 @@ As a consequence, Freqtrade will not enter a trade for this pair - as trading on
 </code></pre></div>
 <p>The same fix should be applied in the configuration file, if order types are defined in your custom config rather than in the strategy.</p>
 <h3 id="im-trying-to-start-the-bot-live-but-get-an-api-permission-error">I'm trying to start the bot live, but get an API permission error<a class="headerlink" href="#im-trying-to-start-the-bot-live-but-get-an-api-permission-error" title="Permanent link">&para;</a></h3>
-<p>Errors like <code>Invalid API-key, IP, or permissions for action</code> mean exactly what they actually say.
-Your API key is either invalid (copy/paste error? check for leading/trailing spaces in the config), expired, or the IP you're running the bot from is not enabled in the Exchange's API console.
-Usually, the permission "Spot Trading" (or the equivalent in the exchange you use) will be necessary.
+<p>Errors like <code>Invalid API-key, IP, or permissions for action</code> mean exactly what they actually say.<br />
+Your API key is either invalid (copy/paste error? check for leading/trailing spaces in the config), expired, or the IP you're running the bot from is not enabled in the Exchange's API console.<br />
+Usually, the permission "Spot Trading" (or the equivalent in the exchange you use) will be necessary.<br />
 Futures will usually have to be enabled specifically.</p>
 <h3 id="how-do-i-search-the-bot-logs-for-something">How do I search the bot logs for something?<a class="headerlink" href="#how-do-i-search-the-bot-logs-for-something" title="Permanent link">&para;</a></h3>
 <p>By default, the bot writes its log into stderr stream. This is implemented this way so that you can easily separate the bot's diagnostics messages from Backtesting, Edge and Hyperopt results, output from other various Freqtrade utility sub-commands, as well as from the output of your custom <code>print()</code>'s you may have inserted into your strategy. So if you need to search the log messages with the grep utility, you need to redirect stderr to stdout and disregard stdout.</p>
