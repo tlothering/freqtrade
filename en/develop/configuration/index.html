@@ -2919,6 +2919,10 @@ In the below case, <code>max_open_trades</code> would be 3 after the merging - a
 <td>Log relevant exchange responses. For debug mode only - use with care.<br><em>Defaults to <code>false</code></em><br> <strong>Datatype:</strong> Boolean</td>
 </tr>
 <tr>
+<td><code>exchange.only_from_ccxt</code></td>
+<td>Prevent data-download from data.binance.vision. Leaving this as false can greatly speed up downloads, but may be problematic if the site is not available.<br><em>Defaults to <code>false</code></em><br> <strong>Datatype:</strong> Boolean</td>
+</tr>
+<tr>
 <td><code>experimental.block_bad_exchanges</code></td>
 <td>Block exchanges known to not work with freqtrade. Leave on default unless you want to test if that exchange works now. <br><em>Defaults to <code>true</code>.</em> <br> <strong>Datatype:</strong> Boolean</td>
 </tr>
